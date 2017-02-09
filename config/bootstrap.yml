@@ -1,0 +1,14 @@
+spring:
+  cloud:
+    consul:
+      enabled: false
+      config:
+        format: YAML
+    config:
+      failFast: true
+  config:
+    retry:
+      maxAttempts : 90
+      multiplier : 1.1
+      maxInterval: 2000
+      initialInterval: 1000
