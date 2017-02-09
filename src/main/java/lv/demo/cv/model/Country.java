@@ -9,18 +9,18 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel("countries")
 public class Country {
 
-    @ApiModelProperty(example = "7545543")
-    private String phone;
+    @ApiModelProperty(example = "751")
+    private String code;
 
     @ApiModelProperty(example = "Latvia")
     private String name;
 
-    public String getPhone() {
-        return phone;
+    public String getCode() {
+        return code;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getName() {
@@ -28,6 +28,11 @@ public class Country {
     }
 
     public void setName(String name) {
+        this.name = name;
+    }
+
+    public Country(String code, String name) {
+        this.code = code;
         this.name = name;
     }
 }

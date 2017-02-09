@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lv.demo.cv.exception.CountryNotFoundException;
 import lv.demo.cv.exception.DiscontinuedCodeException;
+import lv.demo.cv.exception.InvalidPhoneException;
 import lv.demo.cv.exception.UnassignedCodeException;
 import lv.demo.cv.model.Country;
 import lv.demo.cv.model.ErrorResponse;
@@ -24,13 +25,13 @@ public class CountryAPI {
     @PostMapping(value = "")
     public Country getCountryByPhone(@RequestBody Request request){
         String phone = request.getPhone();
-        Country country = new Country();
+        Country country = new Country("","");
         country.setName("test");
-        country.setPhone(phone);
+        country.setCode(phone);
         return country;
     }
 
-    @ExceptionHandler({CountryNotFoundException.class, DiscontinuedCodeException.class, UnassignedCodeException.class})
+    @ExceptionHandler({CountryNotFoundException.class, DiscontinuedCodeException.class, UnassignedCodeException.class, InvalidPhoneException.class})
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public ErrorResponse handleExceptions(Exception ex){
         ErrorResponse error = new ErrorResponse();
