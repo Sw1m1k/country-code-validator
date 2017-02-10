@@ -20,14 +20,16 @@ public class PhoneManipulationServiceImpl implements PhoneManipulationService{
     @Autowired
     private DefaultCache defaultCache;
 
-    @Value("${data.maxCountryCodeLength}")
+    @Value("${manipulation.maxCountryCodeLength}")
     private int maxCountryCodeLength;
 
     private static final String UNASSIGNED="unassigned";
 
     private static final String DISCONTINUED="discontinued";
 
-    public Country getCountry(String phone) throws CountryNotFoundException, DiscontinuedCodeException, UnassignedCodeException, InvalidPhoneException, CasheException {
+    private static final String RESERVED="reserved";
+
+    public Country getCountry(String phone) throws CountryNotFoundException, DiscontinuedCodeException, UnassignedCodeException, InvalidPhoneException, CasheException, ReservedCodeException {
         Country resultCountry = null;
 
         boolean isValid = validationService.isPhoneValid(phone);
@@ -42,7 +44,7 @@ public class PhoneManipulationServiceImpl implements PhoneManipulationService{
             for(int i = maxCountryCodeLength; i > 0; i--) {
                 Country country = defaultCache.getCountry(phoneNumber.substring(0,i));
                 if(country != null){
-                    if(!country.getName().equals(UNASSIGNED) && !country.getName().equals(DISCONTINUED)){
+                    if(!country.getName().equals(UNASSIGNED) && !country.getName().equals(DISCONTINUED) && !country.getName().equals(RESERVED)){
                         resultCountry = country;
                         break;
                     }else{
@@ -57,6 +59,8 @@ public class PhoneManipulationServiceImpl implements PhoneManipulationService{
                 throw new UnassignedCodeException("Country Code is unassigned, please refer to the country code documentation");
             }else if(resultCountry.getName().equals(DISCONTINUED)){
                 throw new DiscontinuedCodeException("Country Code is discontinued, please refer to the country code documentation");
+            }else if(resultCountry.getName().equals(RESERVED)){
+                throw new ReservedCodeException("Country Code is reserved,but not in use at the moment, please refer to the country code documentation");
             }
             return resultCountry;
         } else {

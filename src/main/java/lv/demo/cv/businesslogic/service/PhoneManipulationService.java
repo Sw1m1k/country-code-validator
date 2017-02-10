@@ -8,5 +8,5 @@ import lv.demo.cv.model.Country;
  */
 public interface PhoneManipulationService {
 
-    Country getCountry(String phone) throws CountryNotFoundException, DiscontinuedCodeException, UnassignedCodeException, InvalidPhoneException, CasheException;
+    Country getCountry(String phone) throws CountryNotFoundException, DiscontinuedCodeException, UnassignedCodeException, InvalidPhoneException, CasheException, ReservedCodeException;
 }

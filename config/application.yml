@@ -4,5 +4,5 @@ cashe:
   reloadCashe: false
   filePath: config/data/CountryCodes.txt
 
-data:
+manipulation:
   maxCountryCodeLength: 7

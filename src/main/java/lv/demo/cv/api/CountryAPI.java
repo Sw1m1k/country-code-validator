@@ -25,7 +25,7 @@ public class CountryAPI {
     @ApiOperation(value="Get country calling code", nickname = "getCode")
     @ResponseStatus(value = HttpStatus.OK)
     @PostMapping(value = "")
-    public Country getCountryByPhone(@RequestBody Request request) throws DiscontinuedCodeException, UnassignedCodeException, CountryNotFoundException, InvalidPhoneException, CasheException {
+    public Country getCountryByPhone(@RequestBody Request request) throws DiscontinuedCodeException, UnassignedCodeException, CountryNotFoundException, InvalidPhoneException, CasheException, ReservedCodeException {
         return phoneManipulationService.getCountry(request.getPhone());
     }
 
@@ -38,7 +38,7 @@ public class CountryAPI {
         return error;
     }
 
-    @ExceptionHandler({InvalidPhoneException.class, DiscontinuedCodeException.class, UnassignedCodeException.class})
+    @ExceptionHandler({InvalidPhoneException.class, DiscontinuedCodeException.class, UnassignedCodeException.class, ReservedCodeException.class})
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ErrorResponse handlePhoneExceptions(Exception ex){
         ErrorResponse error = new ErrorResponse();

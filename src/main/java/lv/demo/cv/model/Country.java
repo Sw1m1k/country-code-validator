@@ -35,4 +35,7 @@ public class Country {
         this.code = code;
         this.name = name;
     }
+
+    public Country() {
+    }
 }
