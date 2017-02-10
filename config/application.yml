@@ -2,5 +2,7 @@ cashe:
   cashSize: 1000
   checkInterval: 60000
   reloadCashe: false
-  filePath: config/data/countryCodes.txt
+  filePath: config/data/CountryCodes.txt
 
+data:
+  maxCountryCodeLength: 7

@@ -26,9 +26,9 @@ import java.util.stream.Stream;
  */
 @Component
 //@RefreshScope
-public class DefaultCashe {
+public class DefaultCache {
 
-    private static final Logger log = LoggerFactory.getLogger(DefaultCashe.class);
+    private static final Logger log = LoggerFactory.getLogger(DefaultCache.class);
 
     @Value("${cashe.checkInterval}")
     private int checkInterval;
@@ -41,6 +41,8 @@ public class DefaultCashe {
 
     @Value("${cashe.filePath}")
     private String fileName;
+
+    private String separator = "=";
 
     private final ScheduledTaskRegistrar registrar = new ScheduledTaskRegistrar();
 
@@ -67,8 +69,9 @@ public class DefaultCashe {
                 Map<String, Country> tempMap = new HashMap<String,Country>(countryMap.asMap());
                 countryMap.asMap().clear();
                 populateCashe();
-                if(countryMap.asMap() != null || countryMap.asMap().size() == 0){
+                if(countryMap.asMap() != null && countryMap.asMap().size() == 0){
                     countryMap.asMap().putAll(tempMap);
+                    tempMap.clear();
                     log.info("Failed to refresh data. Restoring old data.");
                 }
             }
@@ -80,8 +83,8 @@ public class DefaultCashe {
 
     private void populateCashe(){
         try (Stream<String> lines = Files.lines(Paths.get(fileName), Charset.forName("Cp1252"))) {
-            lines.filter(line -> line.contains("=")).forEach(
-                    line -> countryMap.asMap().putIfAbsent(line.split("=")[0], new Country(line.split("=")[0],line.split("=")[1])));
+            lines.filter(line -> line.contains(separator)).forEach(
+                    line -> countryMap.asMap().putIfAbsent(line.split(separator)[0], new Country(line.split(separator)[0],line.split(separator)[1])));
 
         } catch (IOException e) {
             e.printStackTrace();

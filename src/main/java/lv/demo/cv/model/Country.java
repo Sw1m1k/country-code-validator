@@ -9,7 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel("countries")
 public class Country {
 
-    @ApiModelProperty(example = "751")
+    @ApiModelProperty(example = "371")
     private String code;
 
     @ApiModelProperty(example = "Latvia")

@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 /**
  * Created by Anastasija on 09.02.2017.
  */
-@Service
+
 public interface ValidationService {
 
-    void validatePhone(String phone) throws InvalidPhoneException;
+    boolean isPhoneValid(String phone);
 }
