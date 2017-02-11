@@ -40,11 +40,15 @@ public class PhoneManipulationServiceImpl implements PhoneManipulationService{
 
         String phoneNumber = phone.replaceAll("[^0-9]", "");
 
+        if(phoneNumber.length() < maxCountryCodeLength){
+            maxCountryCodeLength = phoneNumber.length();
+        }
+
         if(maxCountryCodeLength > 0){
             for(int i = maxCountryCodeLength; i > 0; i--) {
                 Country country = defaultCache.getCountry(phoneNumber.substring(0,i));
                 if(country != null){
-                    if(!country.getName().equals(UNASSIGNED) && !country.getName().equals(DISCONTINUED) && !country.getName().equals(RESERVED)){
+                    if(!country.getName().toLowerCase().equals(UNASSIGNED) && !country.getName().toLowerCase().equals(DISCONTINUED) && !country.getName().toLowerCase().equals(RESERVED)){
                         resultCountry = country;
                         break;
                     }else{
@@ -55,11 +59,11 @@ public class PhoneManipulationServiceImpl implements PhoneManipulationService{
         }
 
         if (resultCountry != null) {
-            if(resultCountry.getName().equals(UNASSIGNED)){
+            if(resultCountry.getName().toLowerCase().equals(UNASSIGNED)){
                 throw new UnassignedCodeException("Country Code is unassigned, please refer to the country code documentation");
-            }else if(resultCountry.getName().equals(DISCONTINUED)){
+            }else if(resultCountry.getName().toLowerCase().equals(DISCONTINUED)){
                 throw new DiscontinuedCodeException("Country Code is discontinued, please refer to the country code documentation");
-            }else if(resultCountry.getName().equals(RESERVED)){
+            }else if(resultCountry.getName().toLowerCase().equals(RESERVED)){
                 throw new ReservedCodeException("Country Code is reserved,but not in use at the moment, please refer to the country code documentation");
             }
             return resultCountry;

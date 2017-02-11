@@ -6,3 +6,30 @@ cashe:
 
 manipulation:
   maxCountryCodeLength: 7
+
+test:
+  api:
+    successPhone : '+1 987654321'
+    unassignedCodePhone: '+696123456789'
+    discontinuedCodePhone: '+295(98)7654321'
+    reservedPhone: '+999(98)7654321'
+    invalidPhoneWithOutPlusPhone: '12345678'
+    invalidPhoneWithLetter: '+1 987654321A'
+    tooBigPhone: '+1 9876543213213123123213'
+    tooSmallPhone: '+1 123'
+    notFoundCountryCodePhone: '+0 123456789'
+  service:
+    successPhone : '+94123456789'
+    unassignedCodePhone: '+(835)987654'
+    discontinuedCodePhone: '+(388)987654'
+    reservedPhone: '+(999)987654'
+    withWhiteSpacesPhone: '+972 1234 567 89'
+    withBracketsPhone: '+(4416)241234'
+    tooBigPhone: '+(999)98765431231231231123'
+    tooSmallPhone: '+999123'
+    notFoundCountryCodePhone: '+(0)9876123'
+
+
+
+
+

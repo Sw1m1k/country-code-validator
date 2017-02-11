@@ -9,7 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel("phones")
 public class Request {
 
-    @ApiModelProperty(example = "7545543")
+    @ApiModelProperty(example = "+371123223")
     private String phone;
 
     public String getPhone() {

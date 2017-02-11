@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -28,12 +29,40 @@ public class CountryApiTest extends CountryCodeValidatorApplicationTests {
         super.setUp();
     }
 
-    @Test
-    public void testSuccessCountry() throws Exception {
+    @Value("${test.api.successPhone}")
+    private String successPhone;
 
-        String uri = "/api/country";
+    @Value("${test.api.unassignedCodePhone}")
+    private String unassignedCodePhone;
+
+    @Value("${test.api.discontinuedCodePhone}")
+    private String discontinuedCodePhone;
+
+    @Value("${test.api.reservedPhone}")
+    private String reservedPhone;
+
+    @Value("${test.api.invalidPhoneWithOutPlusPhone}")
+    private String invalidPhoneWithOutPlusPhone;
+
+    @Value("${test.api.invalidPhoneWithLetter}")
+    private String invalidPhoneWithLetter;
+
+    @Value("${test.api.tooBigPhone}")
+    private String tooBigPhone;
+
+    @Value("${test.api.tooSmallPhone}")
+    private String tooSmallPhone;
+
+    @Value("${test.api.notFoundCountryCodePhone}")
+    private String notFoundCountryCodePhone;
+
+    String uri = "/api/country";
+
+    @Test
+    public void testSuccessCountryApi() throws Exception {
+
         Request request = new Request();
-        request.setPhone("+1 987654321");
+        request.setPhone(successPhone);
         String inputJson = super.mapToJson(request);
 
         MvcResult result = mvc
@@ -63,11 +92,10 @@ public class CountryApiTest extends CountryCodeValidatorApplicationTests {
     }
 
     @Test
-    public void testUnassignedCountry() throws Exception {
+    public void testUnassignedCountryApi() throws Exception {
 
-        String uri = "/api/country";
         Request request = new Request();
-        request.setPhone("+696123456789");
+        request.setPhone(unassignedCodePhone);
         String inputJson = super.mapToJson(request);
 
         MvcResult result = mvc
@@ -97,11 +125,10 @@ public class CountryApiTest extends CountryCodeValidatorApplicationTests {
     }
 
     @Test
-    public void testDiscontinuedCountry() throws Exception {
+    public void testDiscontinuedCountryApi() throws Exception {
 
-        String uri = "/api/country";
         Request request = new Request();
-        request.setPhone("+295(98)7654321");
+        request.setPhone(discontinuedCodePhone);
         String inputJson = super.mapToJson(request);
 
         MvcResult result = mvc
@@ -131,11 +158,10 @@ public class CountryApiTest extends CountryCodeValidatorApplicationTests {
     }
 
     @Test
-    public void testReservedCountry() throws Exception {
+    public void testReservedCountryApi() throws Exception {
 
-        String uri = "/api/country";
         Request request = new Request();
-        request.setPhone("+999(98)7654321");
+        request.setPhone(reservedPhone);
         String inputJson = super.mapToJson(request);
 
         MvcResult result = mvc
@@ -165,11 +191,10 @@ public class CountryApiTest extends CountryCodeValidatorApplicationTests {
     }
 
     @Test
-    public void testInvalidPhoneWithOutPlus() throws Exception {
+    public void testInvalidPhoneWithOutPlusApi() throws Exception {
 
-        String uri = "/api/country";
         Request request = new Request();
-        request.setPhone("12345678");
+        request.setPhone(invalidPhoneWithOutPlusPhone);
         String inputJson = super.mapToJson(request);
 
         MvcResult result = mvc
@@ -199,11 +224,10 @@ public class CountryApiTest extends CountryCodeValidatorApplicationTests {
     }
 
     @Test
-    public void testInvalidPhoneWithLetter() throws Exception {
+    public void testInvalidPhoneWithLetterApi() throws Exception {
 
-        String uri = "/api/country";
         Request request = new Request();
-        request.setPhone("+1 987654321A");
+        request.setPhone(invalidPhoneWithLetter);
         String inputJson = super.mapToJson(request);
 
         MvcResult result = mvc
@@ -233,11 +257,10 @@ public class CountryApiTest extends CountryCodeValidatorApplicationTests {
     }
 
     @Test
-    public void testTooBigPhone() throws Exception {
+    public void testTooBigPhoneApi() throws Exception {
 
-        String uri = "/api/country";
         Request request = new Request();
-        request.setPhone("+1 9876543213213123123213");
+        request.setPhone(tooBigPhone);
         String inputJson = super.mapToJson(request);
 
         MvcResult result = mvc
@@ -267,11 +290,10 @@ public class CountryApiTest extends CountryCodeValidatorApplicationTests {
     }
 
     @Test
-    public void testTooSmallPhone() throws Exception {
+    public void testTooSmallPhoneApi() throws Exception {
 
-        String uri = "/api/country";
         Request request = new Request();
-        request.setPhone("+1 123");
+        request.setPhone(tooSmallPhone);
         String inputJson = super.mapToJson(request);
 
         MvcResult result = mvc
@@ -301,11 +323,10 @@ public class CountryApiTest extends CountryCodeValidatorApplicationTests {
     }
 
     @Test
-    public void testNotFoundCountry() throws Exception {
+    public void testNotFoundCountryApi() throws Exception {
 
-        String uri = "/api/country";
         Request request = new Request();
-        request.setPhone("+0 123456789");
+        request.setPhone(notFoundCountryCodePhone);
         String inputJson = super.mapToJson(request);
 
         MvcResult result = mvc
